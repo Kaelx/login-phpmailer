@@ -25,10 +25,10 @@ function sendOTP($email, $otp) {
     $mail->SMTPAuth=true;
     $mail->SMTPSecure='tls';
 
-    $mail->Username=getenv('MAIL_USERNAME');
-    $mail->Password=getenv('MAIL_PASSWORD');
-    $mail->setFrom(getenv('MAIL_USERNAME'), 'OTP Recovery');
+    $mail->Username='';  //Email Address
+    $mail->Password='';  //16 key password
 
+    $mail->setFrom('sample@mail.com', 'OTP Recovery');
     $mail->addAddress($email);
 
     $mail->isHTML(true);
