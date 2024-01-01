@@ -29,7 +29,7 @@ if (isset($_POST["login"])) {
     $user = $result->fetch_assoc();
 
     if (!$user) {
-        alert("Email does not exist.");
+        alert("Email does not exist. Please register first!");
     }else if (password_verify($password, $user["password"])) {
         if ($user["status"] == 0) {
             alert("Please verify email account before login.","verification.php");
@@ -64,6 +64,7 @@ if (isset($_POST["login"])) {
 
 <body>
 
+<!-- add text here "PLEASE TRY OUT MY LOGIN WITH PHPMAILER" -->
     <nav class="navbar navbar-expand-lg navbar-light navbar-laravel">
         <div class="container">
             <a class="navbar-brand" href="#">Login Form</a>
@@ -80,10 +81,12 @@ if (isset($_POST["login"])) {
                         <a class="nav-link" href="register.php">Register</a>
                     </li>
                 </ul>
-
             </div>
         </div>
     </nav>
+    <div class="container">
+        <h3 class="text-center fs-3 fs-md-2 fs-lg-1">PLEASE TRY OUT MY LOGIN WITH PHPMAILER</h3>
+    </div>
 
     <main class="login-form">
         <div class="container">
