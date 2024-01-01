@@ -25,10 +25,10 @@ function sendOTP($email, $otp) {
     $mail->SMTPAuth=true;
     $mail->SMTPSecure='tls';
 
-    $mail->Username='';  //Email Address
-    $mail->Password='';  //16 key password
+    $mail->Username='000phpmailer@gmail.com';
+    $mail->Password='qbrz dvmt otmf sjly';
 
-    $mail->setFrom('sample@mail.com', 'OTP Verification');
+    $mail->setFrom('000phpmailer@gmail.com', 'OTP Verification');
     $mail->addAddress($email);
 
     $mail->isHTML(true);
