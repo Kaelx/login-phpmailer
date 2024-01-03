@@ -83,8 +83,15 @@ if (isset($_POST["login"])) {
             </div>
         </div>
     </nav>
-    <div class="container">
-        <h3 class="text-center fs-3 fs-md-2 fs-lg-1">PLEASE TRY OUT MY LOGIN WITH PHPMAILER</h3>
+
+    <div class="container py-3">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="alert alert-info" role="alert">
+                    <h4 class="alert-heading text-center">PLEASE TRY OUT MY LOGIN WITH PHPMAILER FUNCTION</h4>
+                </div>
+            </div>
+        </div>
     </div>
 
     <main class="login-form">
