@@ -86,8 +86,8 @@ if (isset($_POST["login"])) {
 
     <div class="container py-3">
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="alert alert-info" role="alert">
+            <div class="col-md-6">
+                <div id="myAlert" class="alert alert-info" role="alert">
                     <h4 class="alert-heading text-center">PLEASE TRY OUT MY LOGIN WITH PHPMAILER FUNCTION</h4>
                 </div>
             </div>
@@ -160,5 +160,20 @@ if (isset($_POST["login"])) {
             password.type = 'password';
         }
         this.classList.toggle('bi-eye');
+    });
+
+
+
+
+    $(document).ready(function() {
+        if (!localStorage.getItem('alertShown')) {
+            setTimeout(function() {
+                $("#myAlert").fadeOut('slow', function() {
+                    localStorage.setItem('alertShown', 'true');
+                });
+            }, 2000);
+        } else {
+            $("#myAlert").hide();
+        }
     });
 </script>
