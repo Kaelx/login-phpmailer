@@ -166,10 +166,13 @@ if (isset($_POST["login"])) {
 
 
     $(document).ready(function() {
-        if (!localStorage.getItem('alertShown')) {
+        if (!sessionStorage.getItem('alertShown')) {
             setTimeout(function() {
                 $("#myAlert").fadeOut('slow', function() {
-                    localStorage.setItem('alertShown', 'true');
+                    sessionStorage.setItem('alertShown', 'true');
+                    setTimeout(function() {
+                        sessionStorage.clear();
+                    }, 60000);
                 });
             }, 2000);
         } else {
