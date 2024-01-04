@@ -166,17 +166,18 @@ if (isset($_POST["login"])) {
 
 
     $(document).ready(function() {
-        if (!sessionStorage.getItem('alertShown')) {
+        if (!localStorage.getItem('alertShown')) {
             setTimeout(function() {
                 $("#myAlert").fadeOut('slow', function() {
-                    sessionStorage.setItem('alertShown', 'true');
-                    setTimeout(function() {
-                        sessionStorage.clear();
-                    }, 60000);
+                    localStorage.setItem('alertShown', 'true');
                 });
             }, 2000);
         } else {
             $("#myAlert").hide();
         }
     });
+
+    window.onbeforeunload = function() {
+        localStorage.clear();
+    };
 </script>
