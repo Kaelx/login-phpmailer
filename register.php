@@ -97,7 +97,7 @@ if(isset($_POST["register"])){
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light navbar-laravel">
+    <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand" href="#">Register Form</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

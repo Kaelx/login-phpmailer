@@ -60,7 +60,7 @@ if (isset($_POST["login"])) {
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light navbar-laravel">
+    <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand" href="#">Login Form</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

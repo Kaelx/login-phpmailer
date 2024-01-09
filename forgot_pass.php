@@ -76,7 +76,7 @@ if(isset($_POST["recover"])){
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light navbar-laravel">
+<nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
         <a class="navbar-brand" href="#">Forgot Password</a>
     </div>
