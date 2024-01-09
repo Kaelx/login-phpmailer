@@ -29,7 +29,7 @@ if (isset($_POST["login"])) {
     $user = $result->fetch_assoc();
 
     if (!$user) {
-        alert("Email does not exist. Please register first!");
+        alert("Email does not exist. Please register first!", "register.php");
     }else if (password_verify($password, $user["password"])) {
         if ($user["status"] == 0) {
             alert("Please verify email account before login.","verification.php");
@@ -53,10 +53,6 @@ if (isset($_POST["login"])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
     <title>Login Form</title>
@@ -112,8 +108,12 @@ if (isset($_POST["login"])) {
                                 <div class="form-group row">
                                     <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
                                     <div class="col-md-6">
-                                        <input type="password" id="password" class="form-control" name="password" required placeholder="Enter your password">
-                                        <i class="bi bi-eye-slash" id="togglePassword"></i>
+                                        <div class="input-group">
+                                            <input type="password" id="password" class="form-control" name="password" required placeholder="Enter your password">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="togglePassword"><i class="bi bi-eye-slash"></i></span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -150,16 +150,19 @@ if (isset($_POST["login"])) {
 
 </html>
 <script>
-    const toggle = document.getElementById('togglePassword');
+    const toggle = document.querySelector('#togglePassword i');
     const password = document.getElementById('password');
 
-    toggle.addEventListener('click', function() {
-        if (password.type === "password") {
+    toggle.addEventListener('click', function(){
+        if(password.type === "password"){
             password.type = 'text';
-        } else {
+            this.classList.remove('bi-eye-slash');
+            this.classList.add('bi-eye');
+        }else{
             password.type = 'password';
+            this.classList.remove('bi-eye');
+            this.classList.add('bi-eye-slash');
         }
-        this.classList.toggle('bi-eye');
     });
 
 
@@ -171,7 +174,7 @@ if (isset($_POST["login"])) {
                 $("#myAlert").fadeOut('slow', function() {
                     localStorage.setItem('alertShown', 'true');
                 });
-            }, 2000);
+            }, 5000);
         } else {
             $("#myAlert").hide();
         }

@@ -20,14 +20,14 @@ function sendOTP($email, $otp) {
     $mail->SMTPAuth=true;
     $mail->SMTPSecure='tls';
 
-    $mail->Username='000phpmailer@gmail.com';
-    $mail->Password='qbrz dvmt otmf sjly';
+    $mail->Username='';
+    $mail->Password='';
 
-    $mail->setFrom('000phpmailer@gmail.com', 'OTP Verification');
+    $mail->setFrom('sample@gmail.com', 'OTP Verification');
     $mail->addAddress($email);
 
     $mail->isHTML(true);
-    $mail->Subject="New Verification OTP";
+    $mail->Subject="New verification code";
     $mail->Body="<p>Dear user, </p> <h3>Your new verification OTP code is $otp <br></h3>";
 
     return $mail->send();
@@ -76,9 +76,6 @@ if(isset($_POST["resend"])){
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <title>Verification</title>
 </head>
