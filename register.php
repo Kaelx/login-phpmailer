@@ -130,6 +130,7 @@ if(isset($_POST["register"])){
                                     <label for="email_address" class="col-md-4 col-form-label text-md-right">Email</label>
                                     <div class="col-md-6">
                                         <input type="email" id="email_address" class="form-control" name="email" required autofocus placeholder="Enter your email">
+                                        <small class="form-text text-muted">Please enter a valid email to send the OTP code.</small>
                                     </div>
                                 </div>
 
