@@ -1,9 +1,10 @@
-<?php 
+<?php
 session_start();
 include 'controller/config.php';
 
 
-function alert($message, $redirect = null) {
+function alert($message, $redirect = null)
+{
     echo "<script>alert('$message');";
     if ($redirect) {
         echo "window.location.replace('$redirect');";
@@ -29,7 +30,7 @@ if (isset($_POST["verify"])) {
                 $stmt->bind_param("ss", $hash, $email);
                 $stmt->execute();
 
-                if($stmt->affected_rows > 0){
+                if ($stmt->affected_rows > 0) {
                     unset($_SESSION['otp']);
                     unset($_SESSION['mail']);
                     session_destroy();
@@ -85,8 +86,12 @@ if (isset($_POST["verify"])) {
                             </div>
                             <div class="mb-3">
                                 <label for="con-psw" class="form-label">Confirm Password</label>
-                                <input type="password" id="con-psw" name="con-pass" class="form-control" required placeholder="Confirm new password">
-                                <i class="bi bi-eye-slash" id="togglePassword"></i>
+                                <div class="input-group">
+                                    <input type="password" id="con-psw" name="con-pass" class="form-control" required placeholder="Confirm new password">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="button" id="togglePassword"><i class="bi bi-eye-slash"></i></button>
+                                    </div>
+                                </div>
                             </div>
                             <button type="submit" name="verify" class="btn btn-success mt-3">Reset Password</button>
                         </form>
@@ -98,21 +103,21 @@ if (isset($_POST["verify"])) {
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 </body>
+
 </html>
 
 <script>
-    const toggle = document.getElementById('togglePassword');
+    const toggleButton = document.getElementById('togglePassword');
     const password = document.getElementById('psw');
     const confirm_password = document.getElementById('con-psw');
 
-    toggle.addEventListener('click', function() {
-        if (password.type === "password") {
-            password.type = 'text';
-            confirm_password.type = 'text';
-        } else {
-            password.type = 'password';
-            confirm_password.type = 'password';
-        }
-        this.classList.toggle('bi-eye');
+    toggleButton.addEventListener('click', function() {
+        const type = password.type === "password" ? 'text' : 'password';
+        password.type = type;
+        confirm_password.type = type;
+
+        const icon = this.querySelector('i');
+        icon.classList.toggle('bi-eye');
+        icon.classList.toggle('bi-eye-slash');
     });
 </script>
