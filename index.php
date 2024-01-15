@@ -101,7 +101,7 @@ if (isset($_POST["login"])) {
                                 <div class="form-group row">
                                     <label for="email_address" class="col-md-4 col-form-label text-md-right">Email</label>
                                     <div class="col-md-6">
-                                        <input type="text" id="email_address" class="form-control" name="email" required autofocus placeholder="Enter your email">
+                                        <input type="email" id="email_address" class="form-control" name="email" required autofocus placeholder="Enter your email">
                                     </div>
                                 </div>
 
