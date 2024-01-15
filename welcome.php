@@ -31,7 +31,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['id'] == true) {
             <p class="lead">Thank you for testing my login function with phpmailer!</p>
         </div>
         <div class="text-right">
-            <a href="controller/logout.php" class="btn btn-primary btn-lg">Logout</a>
+            <a href="controller/logout.php" class="btn btn-danger btn-lg">Logout</a>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
