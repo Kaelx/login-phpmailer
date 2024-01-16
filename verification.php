@@ -1,7 +1,15 @@
 <?php 
 session_start();
 include 'controller/config.php';
-require 'phpmailer/PHPMailerAutoload.php';
+
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/autoload.php';
+
+
 
 function alert($message, $redirect = null) {
     echo "<script>alert('$message');";
@@ -20,8 +28,8 @@ function sendOTP($email, $otp) {
     $mail->SMTPAuth=true;
     $mail->SMTPSecure='tls';
 
-    $mail->Username='';
-    $mail->Password='';
+    $mail->Username='000phpmailer@gmail.com';
+    $mail->Password='qbrz dvmt otmf sjly';
 
     $mail->setFrom('sample@gmail.com', 'OTP Verification');
     $mail->addAddress($email);

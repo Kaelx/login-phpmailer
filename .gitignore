@@ -1,0 +1,5 @@
+#ignore images filetypes
+*.png
+*.jpg
+*.jpeg
+*.gif
