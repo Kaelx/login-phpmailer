@@ -1,7 +1,8 @@
 <?php 
 session_start();
 include 'controller/config.php';
-include 'controller/credentials.php';
+include 'controller/credentials.php'; //create a file name credentials.php and put your email($mailUsername = 'youremail@gmail.com') and password($mailPassword = '16 keys') for sending OTP
+
 
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -29,8 +30,8 @@ function sendOTP($email, $otp, $mailUsername, $mailPassword) {
     $mail->SMTPAuth=true;
     $mail->SMTPSecure='tls';
 
-    $mail->Username = $mailUsername;
-    $mail->Password = $mailPassword;
+    $mail->Username = $mailUsername; //variable from credentials.php
+    $mail->Password = $mailPassword; //variable from credentials.php
 
     $mail->setFrom('sample@gmail.com', 'OTP Verification');
     $mail->addAddress($email);
