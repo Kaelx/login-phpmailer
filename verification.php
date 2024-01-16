@@ -1,6 +1,7 @@
 <?php 
 session_start();
 include 'controller/config.php';
+include 'controller/credentials.php';
 
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -19,7 +20,7 @@ function alert($message, $redirect = null) {
     echo "</script>";
 }
 
-function sendOTP($email, $otp) {
+function sendOTP($email, $otp, $mailUsername, $mailPassword) {
     $mail = new PHPMailer;
 
     $mail->isSMTP();
@@ -28,8 +29,8 @@ function sendOTP($email, $otp) {
     $mail->SMTPAuth=true;
     $mail->SMTPSecure='tls';
 
-    $mail->Username='000phpmailer@gmail.com';
-    $mail->Password='qbrz dvmt otmf sjly';
+    $mail->Username = $mailUsername;
+    $mail->Password = $mailPassword;
 
     $mail->setFrom('sample@gmail.com', 'OTP Verification');
     $mail->addAddress($email);
@@ -69,7 +70,7 @@ if(isset($_POST["resend"])){
         $_SESSION['otp'] = $newOtp;
         $email = $_SESSION['mail'];
 
-        if(!sendOTP($email, $newOtp)){
+        if(!sendOTP($email, $newOtp, $mailUsername, $mailPassword)){
             alert("Failed to resend OTP. Please try again.");
         } else {
             alert("New OTP sent successfully.");
