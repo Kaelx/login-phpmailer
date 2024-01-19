@@ -1,4 +1,5 @@
 <?php
+$page = 'RESET PASSWORD';
 include 'views/header.php';
 
 ?>

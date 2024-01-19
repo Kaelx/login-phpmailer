@@ -1,4 +1,5 @@
 <?php
+$page = 'HOME';
 include 'views/header.php';
 
 if (isset($_SESSION['loggedin']) && $_SESSION['id'] == true) {

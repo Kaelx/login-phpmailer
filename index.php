@@ -1,5 +1,5 @@
 <?php
-
+$page = 'LOGIN';
 if (isset($_SESSION['loggedin']) && $_SESSION['id'] == true) {
     header("location: welcome.php");
     exit();
