@@ -1,8 +1,5 @@
 <?php 
-session_start();
-include 'controller/config.php';
 include 'controller/credentials.php'; //create a file name credentials.php and put your email($mailUsername = 'youremail@gmail.com') and password($mailPassword = '16 keys') for sending OTP
-
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -11,19 +8,9 @@ use PHPMailer\PHPMailer\Exception;
 require 'vendor/autoload.php';
 
 
-
-
 if (isset($_SESSION['loggedin']) && $_SESSION['id'] == true) {
     header("location: welcome.php");
     exit();
-}
-
-function alert($message, $redirect = null) {
-    echo "<script>alert('$message');";
-    if ($redirect) {
-        echo "window.location.replace('$redirect');";
-    }
-    echo "</script>";
 }
 
 function sendOTP($email, $otp, $mailUsername, $mailPassword) {
@@ -48,42 +35,11 @@ function sendOTP($email, $otp, $mailUsername, $mailPassword) {
     return $mail->send();
 }
 
-if(isset($_POST["recover"])){
-    $email = $_POST["email"];
 
-    $stmt = $connect->prepare("SELECT * FROM login WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
+include 'views/header.php';
 
-    $result = $stmt->get_result();
-    $user = $result->fetch_assoc();
-
-    if (!$user) {
-        alert("Email does not exist.");
-    } else if($user["status"] == 0){
-        alert("Sorry, your account must verify first, before you recover your password !", "index.php");
-    } else {
-        $otp = rand(100000,999999);
-        $_SESSION['otp'] = $otp;
-        $_SESSION['mail'] = $email;
-
-        if(!sendOTP($email, $otp, $mailUsername, $mailPassword)){
-            alert("Invalid Email");
-        } else {
-            alert("To recover you account, check the OTP sent to $email", 'reset_psw.php');
-        }
-    }
-}
 ?>
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <title>Login Form</title>
-</head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light">
@@ -119,4 +75,7 @@ if(isset($_POST["recover"])){
     </div>
 </main>
 </body>
-</html>
+
+<?php
+include 'views/footer.php';
+?>

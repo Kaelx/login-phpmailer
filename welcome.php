@@ -1,6 +1,5 @@
 <?php
-session_start();
-include 'controller/config.php';
+include 'views/header.php';
 
 if (isset($_SESSION['loggedin']) && $_SESSION['id'] == true) {
     $id = $_SESSION['id'];
@@ -16,14 +15,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['id'] == true) {
 }
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to My Website</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-</head>
+
 <body>
     <div class="container">
         <div class="jumbotron mt-5">
@@ -34,7 +26,8 @@ if (isset($_SESSION['loggedin']) && $_SESSION['id'] == true) {
             <a href="controller/logout.php" class="btn btn-danger btn-lg">Logout</a>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>
+
+<?php
+include 'views/footer.php';
+?>

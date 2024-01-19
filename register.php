@@ -1,6 +1,4 @@
 <?php 
-session_start();
-include 'controller/config.php';
 include 'controller/credentials.php'; //create a file name credentials.php and put your email($mailUsername = 'youremail@gmail.com') and password($mailPassword = '16 keys') for sending OTP
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -15,13 +13,6 @@ if (isset($_SESSION['loggedin']) && $_SESSION['id'] == true) {
     exit();
 }
 
-function alert($message, $redirect = null) {
-    echo "<script>alert('$message');";
-    if ($redirect) {
-        echo "window.location.replace('$redirect');";
-    }
-    echo "</script>";
-}
 
 function sendOTP($email, $otp, $mailUsername, $mailPassword) {
     $mail = new PHPMailer;
@@ -45,62 +36,12 @@ function sendOTP($email, $otp, $mailUsername, $mailPassword) {
     return $mail->send();
 }
 
-if(isset($_POST["register"])){
-    $email = $_POST["email"];
-    $password = $_POST["password"];
-    $fname = $_POST["fname"];
-    $lname = $_POST["lname"];
 
-    if (!preg_match("/^[a-zA-Z-' ]*$/",$fname) || !preg_match("/^[a-zA-Z-' ]*$/",$lname)) {
-        alert("Please enter a valid name.");
-        return;
-    }
 
-    $stmt = $connect->prepare("SELECT * FROM login WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
+include 'views/header.php';
 
-    $result = $stmt->get_result();
-    $user = $result->fetch_assoc();
-
-    if(empty($email) || empty($password)){
-        alert("Email and password cannot be empty.");
-    } else if($user){
-        alert("User with email already exist!");
-    } else {
-        $password_hash = password_hash($password, PASSWORD_BCRYPT);
-
-        $stmt = $connect->prepare("INSERT INTO login (email, password, fname, lname) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssss", $email, $password_hash, $fname, $lname);
-        $stmt->execute();
-
-        if($stmt->affected_rows > 0){
-            $otp = rand(100000,999999);
-            $_SESSION['otp'] = $otp;
-            $_SESSION['mail'] = $email;
-
-            if(!sendOTP($email, $otp, $mailUsername, $mailPassword)){
-                alert("Register Failed, Invalid Email");
-            } else {
-                alert("Register Successfully, OTP sent to $email", 'verification.php');
-            }
-        }
-    }
-}
 ?>
 
-
-
-<!doctype html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
-    <title>Register Form</title>
-</head>
 
 <body>
 
@@ -179,14 +120,12 @@ if(isset($_POST["register"])){
         </div>
 
     </main>
-    <footer class="footer fixed-bottom bg-light py-3 text-center">
-    <p class="text-muted">Made by: <span class='text-info'>John Mark Cuyos </span> <a href="https://github.com/Kaelx" target="_blank" class="link-warning">(Github Profile)</a></p>
-</footer>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 </body>
+<?php
+include 'views/footer.php';
 
-</html>
+?>
+
 <script>
     const toggle = document.querySelector('#togglePassword i');
     const password = document.getElementById('password');

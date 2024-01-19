@@ -1,62 +1,14 @@
 <?php
-session_start();
-include 'controller/config.php';
 
 if (isset($_SESSION['loggedin']) && $_SESSION['id'] == true) {
     header("location: welcome.php");
     exit();
 }
 
+include 'views/header.php';
 
-function alert($message, $redirect = null)
-{
-    echo "<script>alert('$message');";
-    if ($redirect) {
-        echo "window.location.replace('$redirect');";
-    }
-    echo "</script>";
-}
-
-if (isset($_POST["login"])) {
-    $email = $_POST["email"];
-    $password = $_POST["password"];
-
-    $stmt = $connect->prepare("SELECT * FROM login WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-
-    $result = $stmt->get_result();
-    $user = $result->fetch_assoc();
-
-    if (!$user) {
-        alert("Email does not exist. Please register first!", "register.php");
-    }else if (password_verify($password, $user["password"])) {
-        if ($user["status"] == 0) {
-            alert("Please verify email account before login.","verification.php");
-            $_SESSION['otp'] = $user["id"];
-            $_SESSION['mail'] = $email;
-        }else{
-            $_SESSION['id'] = $user["id"];
-            $_SESSION['loggedin'] = true;
-            alert("Login in successfully", "welcome.php");
-        }
-    } else {
-        alert("Email or password invalid, please try again.");
-    }
-}
 ?>
 
-
-<!doctype html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
-    <title>Login Form</title>
-</head>
 
 <body>
 
@@ -139,48 +91,45 @@ if (isset($_POST["login"])) {
                 </div>
             </div>
         </div>
-
     </main>
-<footer class="footer fixed-bottom bg-light py-3 text-center">
-    <p class="text-muted">Made by: <span class='text-info'>John Mark Cuyos </span> <a href="https://github.com/Kaelx" target="_blank" class="link-warning">(Github Profile)</a></p>
-</footer>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-</body>
 
-</html>
-<script>
-    const toggle = document.querySelector('#togglePassword i');
-    const password = document.getElementById('password');
+    <?php
 
-    toggle.addEventListener('click', function(){
-        if(password.type === "password"){
-            password.type = 'text';
-            this.classList.remove('bi-eye-slash');
-            this.classList.add('bi-eye');
-        }else{
-            password.type = 'password';
-            this.classList.remove('bi-eye');
-            this.classList.add('bi-eye-slash');
-        }
-    });
+    include 'views/footer.php';
+    ?>
+
+    <script>
+        const toggle = document.querySelector('#togglePassword i');
+        const password = document.getElementById('password');
+
+        toggle.addEventListener('click', function() {
+            if (password.type === "password") {
+                password.type = 'text';
+                this.classList.remove('bi-eye-slash');
+                this.classList.add('bi-eye');
+            } else {
+                password.type = 'password';
+                this.classList.remove('bi-eye');
+                this.classList.add('bi-eye-slash');
+            }
+        });
 
 
 
 
-    $(document).ready(function() {
-        if (!localStorage.getItem('alertShown')) {
-            setTimeout(function() {
-                $("#myAlert").fadeOut('slow', function() {
-                    localStorage.setItem('alertShown', 'true');
-                });
-            }, 5000);
-        } else {
-            $("#myAlert").hide();
-        }
-    });
+        $(document).ready(function() {
+            if (!localStorage.getItem('alertShown')) {
+                setTimeout(function() {
+                    $("#myAlert").fadeOut('slow', function() {
+                        localStorage.setItem('alertShown', 'true');
+                    });
+                }, 5000);
+            } else {
+                $("#myAlert").hide();
+            }
+        });
 
-    window.onbeforeunload = function() {
-        localStorage.clear();
-    };
-</script>
+        window.onbeforeunload = function() {
+            localStorage.clear();
+        };
+    </script>

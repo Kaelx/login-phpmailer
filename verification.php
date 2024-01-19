@@ -1,8 +1,5 @@
 <?php 
-session_start();
-include 'controller/config.php';
 include 'controller/credentials.php'; //create a file name credentials.php and put your email($mailUsername = 'youremail@gmail.com') and password($mailPassword = '16 keys') for sending OTP
-
 
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -10,16 +7,6 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 require 'vendor/autoload.php';
-
-
-
-function alert($message, $redirect = null) {
-    echo "<script>alert('$message');";
-    if ($redirect) {
-        echo "window.location.replace('$redirect');";
-    }
-    echo "</script>";
-}
 
 function sendOTP($email, $otp, $mailUsername, $mailPassword) {
     $mail = new PHPMailer;
@@ -43,52 +30,12 @@ function sendOTP($email, $otp, $mailUsername, $mailPassword) {
     return $mail->send();
 }
 
-if(isset($_POST["verify"])){
-    if (isset($_SESSION['otp'], $_SESSION['mail'])) {
-        $otp = $_SESSION['otp'];
-        $email = $_SESSION['mail'];
-        $otp_code = $_POST['otp_code'];
 
-        if($otp != $otp_code){
-            alert("Invalid OTP code");
-        } else {
-            $stmt = $connect->prepare("UPDATE login SET status = 1 WHERE email = ?");
-            $stmt->bind_param("s", $email);
-            $stmt->execute();
+include 'views/header.php';
 
-            if($stmt->affected_rows > 0){
-                alert("Verify account done, you may sign in now", "index.php");
-            }
-        }
-    } else {
-        alert("Session variables not set. Please try again.");
-    }
-}
 
-if(isset($_POST["resend"])){
-    if (isset($_SESSION['otp'], $_SESSION['mail'])) {
-        $newOtp = rand(100000, 999999);
-        $_SESSION['otp'] = $newOtp;
-        $email = $_SESSION['mail'];
-
-        if(!sendOTP($email, $newOtp, $mailUsername, $mailPassword)){
-            alert("Failed to resend OTP. Please try again.");
-        } else {
-            alert("New OTP sent successfully.");
-        }
-    } else {
-        alert("Session variables not set. Please try again.");
-    }
-}
 ?>
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <title>Verification</title>
-</head>
+
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light">
@@ -113,7 +60,7 @@ if(isset($_POST["resend"])){
                             </div>
 
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-success mr-2" value="Verify" name="verify">Verify</button>
+                                <button type="submit" class="btn btn-success mr-2" value="Verify" name="verify-account">Verify</button>
                                 <button type="submit" class="btn btn-secondary" name="resend"> Resend OTP</button>
                             </div>
                         </form>
@@ -123,7 +70,8 @@ if(isset($_POST["resend"])){
         </div>
     </div>
 </main>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 </body>
-</html>
+<?php
+include 'views/footer.php';
+
+?>

@@ -1,65 +1,7 @@
 <?php
-session_start();
-include 'controller/config.php';
+include 'views/header.php';
 
-
-function alert($message, $redirect = null)
-{
-    echo "<script>alert('$message');";
-    if ($redirect) {
-        echo "window.location.replace('$redirect');";
-    }
-    echo "</script>";
-}
-
-if (isset($_POST["verify"])) {
-    if (isset($_SESSION['otp'], $_SESSION['mail'])) {
-        $otp = $_SESSION['otp'];
-        $email = $_SESSION['mail'];
-        $otp_code = $_POST['otp_code'];
-        $password = $_POST['pass'];
-        $confirm_password = $_POST['con-pass'];
-
-        if ($otp != $otp_code) {
-            alert("Invalid OTP code. Please try again.");
-        } else {
-            if ($password === $confirm_password) {
-                $hash = password_hash($password, PASSWORD_BCRYPT);
-
-                $stmt = $connect->prepare("UPDATE login SET password=? WHERE email=?");
-                $stmt->bind_param("ss", $hash, $email);
-                $stmt->execute();
-
-                if ($stmt->affected_rows > 0) {
-                    unset($_SESSION['otp']);
-                    unset($_SESSION['mail']);
-                    session_destroy();
-
-                    alert("Your password has been successfully reset", "index.php");
-                } else {
-                    alert("Failed to update password. Please try again.");
-                }
-            } else {
-                alert("Passwords do not match. Please try again.");
-            }
-        }
-    } else {
-        alert("Session variables not set. Please try again.");
-    }
-}
 ?>
-
-
-<!doctype html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
-    <title>Password Reset Form</title>
-</head>
 
 <body>
 
@@ -100,11 +42,12 @@ if (isset($_POST["verify"])) {
             </div>
         </div>
     </main>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 </body>
 
-</html>
+<?php
+include 'views/footer.php';
+
+?>
 
 <script>
     const toggleButton = document.getElementById('togglePassword');
