@@ -30,7 +30,7 @@ if (isset($_POST["login"])) {
             $_SESSION['otp'] = $user["id"];
             $_SESSION['mail'] = $email;
         }else{
-            alert("Login successfuly!","welcome.php");
+            alert("Login successfuly!", "index.php");
             $_SESSION['id'] = $user["id"];
             $_SESSION['loggedin'] = true;
         }

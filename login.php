@@ -1,48 +1,15 @@
 <?php
-$page = 'SIGN UP';
-include 'controller/credentials.php'; //create a file name credentials.php and put your email($mailUsername = 'youremail@gmail.com') and password($mailPassword = '16 keys') for sending OTP
-
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
-
-require 'vendor/autoload.php';
-
-function sendOTP($email, $otp, $mailUsername, $mailPassword)
-{
-    $mail = new PHPMailer;
-
-    $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com';
-    $mail->Port = 587;
-    $mail->SMTPAuth = true;
-    $mail->SMTPSecure = 'tls';
-
-    $mail->Username = $mailUsername; //variable from credentials.php
-    $mail->Password = $mailPassword; //variable from credentials.php
-
-    $mail->setFrom('sample@gmail.com', 'OTP Verification');
-    $mail->addAddress($email);
-
-    $mail->isHTML(true);
-    $mail->Subject = "Verification code";
-    $mail->Body = "<p>Dear user, </p> <h3>Your verification OTP code is $otp <br></h3>";
-
-    return $mail->send();
-}
-
-
-
+$page = 'LOGIN';
 include 'views/header.php';
-
-if (!isset($_SESSION['loggedin']) || $_SESSION['id'] != true) {
-
 ?>
 
+<?php
 
+if (!isset($_SESSION['loggedin']) || $_SESSION['id'] != true) {
+?>
 <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
-        <a class="navbar-brand" href="#">Register Form</a>
+        <a class="navbar-brand" href="#">Login Form</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon" alt="Menu"></span>
         </button>
@@ -50,30 +17,38 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['id'] != true) {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="index.php">Login</a>
+                    <a class="nav-link" href="index.php" style="font-weight:bold; color:black; text-decoration:underline">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="register.php" style="font-weight:bold; color:black; text-decoration:underline">Register</a>
+                    <a class="nav-link" href="register.php">Register</a>
                 </li>
             </ul>
-
         </div>
     </div>
 </nav>
+
+<div class="container py-3">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div id="myAlert" class="alert alert-info" role="alert">
+                <h4 class="alert-heading text-center">PLEASE TRY OUT MY LOGIN WITH PHPMAILER FUNCTION</h4>
+            </div>
+        </div>
+    </div>
+</div>
 
 <main class="login-form">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Register</div>
+                    <div class="card-header">Login</div>
                     <div class="card-body">
-                        <form action="#" method="POST" name="register">
+                        <form action="#" method="POST" name="login">
                             <div class="form-group row">
                                 <label for="email_address" class="col-md-4 col-form-label text-md-right">Email</label>
                                 <div class="col-md-6">
                                     <input type="email" id="email_address" class="form-control" name="email" required autofocus placeholder="Enter your email">
-                                    <small class="form-text text-muted">Please enter a valid email to send the OTP code.</small>
                                 </div>
                             </div>
 
@@ -86,26 +61,24 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['id'] != true) {
                                             <span class="input-group-text" id="togglePassword"><i class="bi bi-eye-slash"></i></span>
                                         </div>
                                     </div>
-                                    <small id="passwordHelp" class="form-text text-muted">Do not input personal password, just random.</small>
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="firstname" class="col-md-4 col-form-label text-md-right">First Name</label>
-                                <div class="col-md-6">
-                                    <input type="text" id="firstname" class="form-control" name="fname" required placeholder="Enter your name">
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="lastname" class="col-md-4 col-form-label text-md-right">Last Name</label>
-                                <div class="col-md-6">
-                                    <input type="text" id="lastname" class="form-control" name="lname" required placeholder="Enter your lastname">
+                                <div class="col-md-6 offset-md-4">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="remember"> Remember Me
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-success mr-2" value="Register" name="register">Register</button>
+                                <button type="submit" class="btn btn-success mr-2" name="login" value="Login">Login</button>
+                                <a href="forgot_pass.php" class="btn btn-link">
+                                    Forgot Your Password?
+                                </a>
                             </div>
                         </form>
                     </div>
@@ -113,20 +86,18 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['id'] != true) {
             </div>
         </div>
     </div>
-
 </main>
 <?php
+
 }else{
     header("location: index.php");
     exit();
-
 }
 
 ?>
-
 <?php
-include 'views/footer.php';
 
+include 'views/footer.php';
 ?>
 
 <script>
@@ -144,4 +115,23 @@ include 'views/footer.php';
             this.classList.add('bi-eye-slash');
         }
     });
+
+
+
+
+    $(document).ready(function() {
+        if (!localStorage.getItem('alertShown')) {
+            setTimeout(function() {
+                $("#myAlert").fadeOut('slow', function() {
+                    localStorage.setItem('alertShown', 'true');
+                });
+            }, 5000);
+        } else {
+            $("#myAlert").hide();
+        }
+    });
+
+    window.onbeforeunload = function() {
+        localStorage.clear();
+    };
 </script>

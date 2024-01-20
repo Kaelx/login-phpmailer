@@ -9,11 +9,6 @@ use PHPMailer\PHPMailer\Exception;
 require 'vendor/autoload.php';
 
 
-if (isset($_SESSION['loggedin']) && $_SESSION['id'] == true) {
-    header("location: welcome.php");
-    exit();
-}
-
 function sendOTP($email, $otp, $mailUsername, $mailPassword)
 {
     $mail = new PHPMailer;
@@ -40,41 +35,47 @@ function sendOTP($email, $otp, $mailUsername, $mailPassword)
 
 include 'views/header.php';
 
+if (!isset($_SESSION['loggedin']) && $_SESSION['id'] != true) {
+
 ?>
 
-<nav class="navbar navbar-expand-lg navbar-light">
-    <div class="container">
-        <a class="navbar-brand" href="#">Forgot Password</a>
-    </div>
-</nav>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Forgot Password</a>
+        </div>
+    </nav>
 
-<main class="login-form">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Password Recovery</div>
-                    <div class="card-body">
-                        <form action="#" method="POST" name="recover_psw">
-                            <div class="form-group row">
-                                <label for="email_address" class="col-md-4 col-form-label text-md-right">Email</label>
-                                <div class="col-md-6">
-                                    <input type="email" id="email_address" class="form-control" name="email" required autofocus placeholder="Enter your email">
+    <main class="login-form">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">Password Recovery</div>
+                        <div class="card-body">
+                            <form action="#" method="POST" name="recover_psw">
+                                <div class="form-group row">
+                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">Email</label>
+                                    <div class="col-md-6">
+                                        <input type="email" id="email_address" class="form-control" name="email" required autofocus placeholder="Enter your email">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-success mr-2" name="recover">Recover</button>
-                                <a href="index.php" class="btn btn-primary">Back to login</a>
-                            </div>
-                        </form>
+                                <div class="col-md-6 offset-md-4">
+                                    <button type="submit" class="btn btn-success mr-2" name="recover">Recover</button>
+                                    <a href="index.php" class="btn btn-primary">Back to login</a>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>
 
 <?php
+} else {
+    header("location: index.php");
+    exit();
+}
 include 'views/footer.php';
 ?>
