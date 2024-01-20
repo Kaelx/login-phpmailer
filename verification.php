@@ -1,4 +1,4 @@
-<?php 
+<?php
 $page = 'VERIFICATION';
 include 'controller/credentials.php'; //create a file name credentials.php and put your email($mailUsername = 'youremail@gmail.com') and password($mailPassword = '16 keys') for sending OTP
 
@@ -9,14 +9,15 @@ use PHPMailer\PHPMailer\Exception;
 
 require 'vendor/autoload.php';
 
-function sendOTP($email, $otp, $mailUsername, $mailPassword) {
+function sendOTP($email, $otp, $mailUsername, $mailPassword)
+{
     $mail = new PHPMailer;
 
     $mail->isSMTP();
-    $mail->Host='smtp.gmail.com';
-    $mail->Port=587;
-    $mail->SMTPAuth=true;
-    $mail->SMTPSecure='tls';
+    $mail->Host = 'smtp.gmail.com';
+    $mail->Port = 587;
+    $mail->SMTPAuth = true;
+    $mail->SMTPSecure = 'tls';
 
     $mail->Username = $mailUsername; //variable from credentials.php
     $mail->Password = $mailPassword; //variable from credentials.php
@@ -25,8 +26,8 @@ function sendOTP($email, $otp, $mailUsername, $mailPassword) {
     $mail->addAddress($email);
 
     $mail->isHTML(true);
-    $mail->Subject="New verification code";
-    $mail->Body="<p>Dear user, </p> <h3>Your new verification OTP code is $otp <br></h3>";
+    $mail->Subject = "New verification code";
+    $mail->Body = "<p>Dear user, </p> <h3>Your new verification OTP code is $otp <br></h3>";
 
     return $mail->send();
 }
@@ -37,7 +38,6 @@ include 'views/header.php';
 
 ?>
 
-<body>
 
 <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
@@ -56,7 +56,7 @@ include 'views/header.php';
                             <div class="form-group row">
                                 <label for="otp" class="col-md-4 col-form-label text-md-right">OTP Code</label>
                                 <div class="col-md-6">
-                                    <input type="number" id="otp" class="form-control" name="otp_code"  autofocus placeholder="Enter OTP code">
+                                    <input type="number" id="otp" class="form-control" name="otp_code" autofocus placeholder="Enter OTP code">
                                 </div>
                             </div>
 
@@ -71,7 +71,7 @@ include 'views/header.php';
         </div>
     </div>
 </main>
-</body>
+
 <?php
 include 'views/footer.php';
 

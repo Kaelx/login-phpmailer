@@ -1,4 +1,4 @@
-<?php 
+<?php
 $page = 'FORGOT PASSWORD';
 include 'controller/credentials.php'; //create a file name credentials.php and put your email($mailUsername = 'youremail@gmail.com') and password($mailPassword = '16 keys') for sending OTP
 
@@ -14,14 +14,15 @@ if (isset($_SESSION['loggedin']) && $_SESSION['id'] == true) {
     exit();
 }
 
-function sendOTP($email, $otp, $mailUsername, $mailPassword) {
+function sendOTP($email, $otp, $mailUsername, $mailPassword)
+{
     $mail = new PHPMailer;
 
     $mail->isSMTP();
-    $mail->Host='smtp.gmail.com';
-    $mail->Port=587;
-    $mail->SMTPAuth=true;
-    $mail->SMTPSecure='tls';
+    $mail->Host = 'smtp.gmail.com';
+    $mail->Port = 587;
+    $mail->SMTPAuth = true;
+    $mail->SMTPSecure = 'tls';
 
     $mail->Username = $mailUsername; //variable from credentials.php
     $mail->Password = $mailPassword; //variable from credentials.php
@@ -30,8 +31,8 @@ function sendOTP($email, $otp, $mailUsername, $mailPassword) {
     $mail->addAddress($email);
 
     $mail->isHTML(true);
-    $mail->Subject="Verification code";
-    $mail->Body="<p>Dear user, </p> <h3>Your forgot password OTP code is $otp <br></h3>";
+    $mail->Subject = "Verification code";
+    $mail->Body = "<p>Dear user, </p> <h3>Your forgot password OTP code is $otp <br></h3>";
 
     return $mail->send();
 }
@@ -40,8 +41,6 @@ function sendOTP($email, $otp, $mailUsername, $mailPassword) {
 include 'views/header.php';
 
 ?>
-
-<body>
 
 <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
@@ -75,7 +74,6 @@ include 'views/header.php';
         </div>
     </div>
 </main>
-</body>
 
 <?php
 include 'views/footer.php';
