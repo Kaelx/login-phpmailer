@@ -166,6 +166,8 @@ if(isset($_POST["verify-account"])){
 
             if($stmt->affected_rows > 0){
                 alert("Verify account done, you may sign in now", "index.php");
+                unset($_SESSION['otp']);
+                unset($_SESSION['mail']);
             }
         }
     } else {

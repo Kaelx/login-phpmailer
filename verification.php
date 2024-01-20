@@ -1,5 +1,7 @@
 <?php
 $page = 'VERIFICATION';
+
+
 include 'controller/credentials.php'; //create a file name credentials.php and put your email($mailUsername = 'youremail@gmail.com') and password($mailPassword = '16 keys') for sending OTP
 include 'views/header.php';
 
@@ -32,7 +34,8 @@ function sendOTP($email, $otp, $mailUsername, $mailPassword)
     return $mail->send();
 }
 
-include 'controller/functions.php';
+if(isset($_SESSION['otp']) && isset($_SESSION['mail'])){
+    include 'controller/functions.php';
 
 ?>
 
@@ -71,6 +74,10 @@ include 'controller/functions.php';
 </main>
 
 <?php
+    }else{header("location: index.php");
+        exit;
+    }
+
 include 'views/footer.php';
 
 ?>

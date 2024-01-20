@@ -1,5 +1,6 @@
 <?php
 $page = 'FORGOT PASSWORD'; 
+
 include 'views/header.php';
 include 'controller/credentials.php'; //create a file name credentials.php and put your email($mailUsername = 'youremail@gmail.com') and password($mailPassword = '16 keys') for sending OTP
 

@@ -1,7 +1,11 @@
 <?php
 $page = 'RESET PASSWORD';
+
 include 'views/header.php';
-include 'controller/functions.php';
+
+
+if(isset($_SESSION['otp']) && isset($_SESSION['mail'])){
+    include 'controller/functions.php';
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-light">
@@ -43,6 +47,10 @@ include 'controller/functions.php';
 </main>
 
 <?php
+    }else{header("location: index.php");
+    exit;
+}
+
 include 'views/footer.php';
 
 ?>
