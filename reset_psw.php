@@ -1,7 +1,7 @@
 <?php
 $page = 'RESET PASSWORD';
 include 'views/header.php';
-
+include 'controller/functions.php';
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-light">

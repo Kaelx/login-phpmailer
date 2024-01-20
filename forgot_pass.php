@@ -1,5 +1,6 @@
 <?php
-$page = 'FORGOT PASSWORD';
+$page = 'FORGOT PASSWORD'; 
+include 'views/header.php';
 include 'controller/credentials.php'; //create a file name credentials.php and put your email($mailUsername = 'youremail@gmail.com') and password($mailPassword = '16 keys') for sending OTP
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -32,11 +33,8 @@ function sendOTP($email, $otp, $mailUsername, $mailPassword)
     return $mail->send();
 }
 
-
-include 'views/header.php';
-
-if (!isset($_SESSION['loggedin']) && $_SESSION['id'] != true) {
-
+if (!isset($_SESSION['loggedin']) || $_SESSION['id'] != true) {
+    include 'controller/functions.php';
 ?>
 
     <nav class="navbar navbar-expand-lg navbar-light">
@@ -77,5 +75,6 @@ if (!isset($_SESSION['loggedin']) && $_SESSION['id'] != true) {
     header("location: index.php");
     exit();
 }
+
 include 'views/footer.php';
 ?>

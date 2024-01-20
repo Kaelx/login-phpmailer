@@ -1,7 +1,7 @@
 <?php
 $page = 'VERIFICATION';
 include 'controller/credentials.php'; //create a file name credentials.php and put your email($mailUsername = 'youremail@gmail.com') and password($mailPassword = '16 keys') for sending OTP
-
+include 'views/header.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -32,9 +32,7 @@ function sendOTP($email, $otp, $mailUsername, $mailPassword)
     return $mail->send();
 }
 
-
-include 'views/header.php';
-
+include 'controller/functions.php';
 
 ?>
 

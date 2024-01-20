@@ -1,11 +1,10 @@
 <?php
 $page = 'LOGIN';
-include 'views/header.php';
-?>
 
-<?php
+include 'views/header.php';
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['id'] != true) {
+    include 'controller/functions.php';
 ?>
 <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
@@ -87,15 +86,14 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['id'] != true) {
         </div>
     </div>
 </main>
+
+
 <?php
 
 }else{
     header("location: index.php");
     exit();
 }
-
-?>
-<?php
 
 include 'views/footer.php';
 ?>
