@@ -2,7 +2,7 @@
 $page = 'SIGN UP';
 
 
-include 'controller/credentials.php'; //create a file name credentials.php and put your email($mailUsername = 'youremail@gmail.com') and password($mailPassword = '16 keys') for sending OTP
+include 'controller/credentials.php'; //create a file name credentials.php and put on your email($mailUsername = 'youremail@gmail.com') and password($mailPassword = '16 keys') for sending OTP
 include 'views/header.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
